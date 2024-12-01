@@ -14,7 +14,8 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -25,31 +26,50 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('employee.index')}}">employees </a>
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('departments.index')}}">departments </a>
+                        <a class="nav-link" href="{{ route('employee.index') }}"> Employees</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('show_register') }}"> Add User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('profile.index') }}"> setting </a>
+                    </li>
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}"> login</a>
+                        </li>
+                    @endguest
+                    <li class="nav-item">
+
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                @auth
+
+
+                    <form class="d-flex" action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-success"> logout </button>
+                    </form>
+                @endauth
             </div>
         </div>
     </nav>
+
+
 
     <main id="main">
         @yield('content')
     </main>
 
-    @yield('js')
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
-    </script>
+
+
+
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/main.js') }}"></script> --}}
+
 </body>
 
 </html>

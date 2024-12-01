@@ -17,7 +17,8 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/employees/index'; // ma3mulha edit meny 
+    // public const not = '/auth/login'; // ma3mulha edit meny 3shan
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

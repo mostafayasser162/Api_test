@@ -39,7 +39,7 @@ class DepartmentController extends Controller
         Department::create([
             'name' => $request->input('name'),
             'title' => $request->input('title'),
-            // 'table name' => $request->input('name fel html'),
+         // 'table name' => $request->input('name fel html'),
         ]);
         return redirect()->route('departments.index')->with('done', ' Department added successfully ');
     }
