@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DepartmentResource;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,13 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::all();
-        return view('departments.index', compact('departments'));
+        // return view('departments.index', compact('departments'));
+        $DepartmentResource = DepartmentResource::collection($departments);
+        return response()->json([
+            'data' => $DepartmentResource,
+            'sucess' => true,
+            200
+        ]);
     }
 
     /**
@@ -23,7 +30,7 @@ class DepartmentController extends Controller
     public function create()
     {
         $department = DB::table('departments')->get();
-        return view('departments.create', compact('department'));
+        // return view('departments.create', compact('department'));
     }
 
     /**
@@ -39,9 +46,14 @@ class DepartmentController extends Controller
         Department::create([
             'name' => $request->input('name'),
             'title' => $request->input('title'),
-         // 'table name' => $request->input('name fel html'),
+            // 'table name' => $request->input('name fel html'),
         ]);
-        return redirect()->route('departments.index')->with('done', ' Department added successfully ');
+        // return redirect()->route('departments.index')->with('done', ' Department added successfully ');
+
+        return response()->json([
+            'success' => true,
+            'msg' => 'Department added successfully',
+        ], 200);
     }
 
     /**
@@ -49,8 +61,14 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        $department = Department::findorFail($id) ;
-        return view('departments.show', compact('department'));
+        $department = Department::findorFail($id);
+        // return view('departments.show', compact('department'));
+        $DepartmentResource = new DepartmentResource($department);
+        return response()->json([
+            'data' => $DepartmentResource,
+            'sucess' => true,
+            200
+        ]);
     }
 
     /**
@@ -75,7 +93,12 @@ class DepartmentController extends Controller
         $department->name = $request->name;
         $department->title = $request->title;
         $department->save();
-        return redirect()->route('departments.index')->with('done', ' Department updated successfully ');
+        // return redirect()->route('departments.index')->with('done', ' Department updated successfully ');
+        return response()->json([
+            'success' => true,
+            'msg' => 'Department updated successfully',
+            'data' => $department,
+        ], 200);
     }
 
     /**
@@ -86,6 +109,9 @@ class DepartmentController extends Controller
     {
         $department = Department::findorFail($id);
         $department->delete();
-        return redirect()->route('departments.index')->with('done', ' Department deleted successfully ');
+        // return redirect()->route('departments.index')->with('done', ' Department deleted successfully ');
+        return response()->json([
+            'success' => true,
+        ], 200);
     }
 }
